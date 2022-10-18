@@ -1,12 +1,10 @@
 import pika
+from rabbitmq_info import Rabbitmq
 
+rabbitmq_info = Rabbitmq()
 
 class Consumer:
     def __init__(self):
-        self.url = 'ip'
-        self.port = 'port'
-        self.vhost = '/'
-        self.cred = pika.PlainCredentials('id', 'passwd')
         self.queue = 'queue_name'
         return
 
@@ -15,7 +13,12 @@ class Consumer:
         return
 
     def main(self):
-        connection = pika.BlockingConnection(pika.ConnectionParameters(self.url, self.port, self.vhost, self.cred))
+        global rabbitmq_info
+
+        connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitmq_info.url
+                                                                       , rabbitmq_info.port
+                                                                       , rabbitmq_info.vhost
+                                                                       , rabbitmq_info.cred))
         channel = connection.channel()
         channel.queue_declare(queue=self.queue)
 

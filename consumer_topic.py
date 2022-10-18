@@ -1,12 +1,11 @@
 import pika
+from rabbitmq_info import Rabbitmq
+
+rabbitmq_info = Rabbitmq()
 
 
-class Consumer:
+class Consumer():
     def __init__(self):
-        self.url = 'ip'
-        self.port = 'port'
-        self.vhost = '/'
-        self.cred = pika.PlainCredentials('id', 'passwd')
         self.queue = 'queue_name'
         return
 
@@ -15,12 +14,16 @@ class Consumer:
         return
 
     def main(self):
-        connection = pika.BlockingConnection(pika.ConnectionParameters(self.url, self.port, self.vhost, self.cred))
+        global rabbitmq_info
+
+        connection = pika.BlockingConnection(pika.ConnectionParameters(rabbitmq_info.url
+                                                                       , rabbitmq_info.port
+                                                                       , rabbitmq_info.vhost
+                                                                       , rabbitmq_info.cred))
         channel = connection.channel()
         channel.exchange_declare(exchange='topic_logs', exchange_type='topic')
         channel.queue_declare(queue=self.queue)
-        channel.queueBind(self.queue, 'topic', "rabbit");
-
+        channel.queue_bind(self.queue, exchange=self.__exchange, routing_key=self.__routing_key);
         channel.basic_consume(queue=self.queue, on_message_callback=Consumer.on_message, auto_ack=True)
         print("Consumer is starting ... ")
         channel.start_consuming()
