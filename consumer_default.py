@@ -17,7 +17,6 @@ class Consumer:
     def main(self):
         connection = pika.BlockingConnection(pika.ConnectionParameters(self.url, self.port, self.vhost, self.cred))
         channel = connection.channel()
-        channel.exchange_declare(exchange='topic_logs', exchange_type='topic')
         channel.queue_declare(queue=self.queue)
         channel.queueBind(self.queue, 'topic', "rabbit");
 
