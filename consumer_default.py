@@ -18,7 +18,6 @@ class Consumer:
         connection = pika.BlockingConnection(pika.ConnectionParameters(self.url, self.port, self.vhost, self.cred))
         channel = connection.channel()
         channel.queue_declare(queue=self.queue)
-        channel.queueBind(self.queue, 'topic', "rabbit");
 
         channel.basic_consume(queue=self.queue, on_message_callback=Consumer.on_message, auto_ack=True)
         print("Consumer is starting ... ")
