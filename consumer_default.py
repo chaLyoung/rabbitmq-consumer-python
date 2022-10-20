@@ -3,9 +3,10 @@ from rabbitmq_info import Rabbitmq
 
 rabbitmq_info = Rabbitmq()
 
+
 class Consumer:
     def __init__(self):
-        self.queue = 'queue_name'
+        self.queue = 'test_queue'
         return
 
     def on_message(ch, method, header, body):
