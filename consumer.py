@@ -4,7 +4,7 @@ from rabbitmq_info import Rabbitmq
 rabbitmq_info = Rabbitmq()
 
 
-class default_consumer:
+class consumer_default:
     def __init__(self):
         self.queue = 'test_queue'
         return
@@ -29,7 +29,7 @@ class default_consumer:
         return
 
 
-class topic_consumer():
+class consumer_topic():
     def __init__(self):
         self.queue = 'test_queue'
         self.exchange = 'topic_logs'
@@ -55,8 +55,3 @@ class topic_consumer():
         print("Consumer is starting ... ")
         channel.start_consuming()
         return
-
-
-if __name__ == '__main__':
-    consumer = topic_consumer()
-    consumer.main()
