@@ -1,4 +1,9 @@
+import os
+import json
+import cv2
 import pika
+import urllib.request
+import numpy as np
 from rabbitmq_info import Rabbitmq
 
 rabbitmq_info = Rabbitmq()
@@ -37,7 +42,13 @@ class consumer_topic():
         return
 
     def on_message(ch, method, header, body):
-        print("received %s" % body)
+        file = json.loads(json.loads(body))
+        image_url = file['file_path']
+        req_image = urllib.request.urlopen(image_url)
+        image_array = np.asarray(bytearray(req_image.read()), dtype=np.uint8)
+        image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        cv2.imshow('Color', image)
+        cv2.waitKey(0)
         return
 
     def main(self):

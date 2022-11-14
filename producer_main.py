@@ -11,3 +11,16 @@ def start(producer_type):
 
 if __name__ == '__main__':
     start("topic")  # write default or topic
+
+
+
+
+
+
+
+
+
+
+
+
+
