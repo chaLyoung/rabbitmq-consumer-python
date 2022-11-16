@@ -4,7 +4,8 @@ import cv2
 import pika
 import urllib.request
 import numpy as np
-from rabbitmq_info import Rabbitmq
+from dotenv import load_dotenv
+from DB import sqlJson
 
 rabbitmq_info = Rabbitmq()
 
