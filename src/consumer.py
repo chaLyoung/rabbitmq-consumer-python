@@ -7,7 +7,12 @@ import numpy as np
 from dotenv import load_dotenv
 from DB import sqlJson
 
-rabbitmq_info = Rabbitmq()
+load_dotenv()
+RABBITMQ_URL = os.environ.get("RABBITMQ_URL")
+RABBITMQ_PORT = os.environ.get("RABBITMQ_PORT")
+RABBITMQ_VHOST = os.environ.get("RABBITMQ_VHOST")
+RABBITMQ_CRED_ID = os.environ.get("RABBITMQ_CRED_ID")
+RABBITMQ_CRED_PWD = os.environ.get("RABBITMQ_CRED_PWD")
 
 
 class consumer_default:
